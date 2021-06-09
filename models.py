@@ -32,3 +32,15 @@ class User(db.Model):
     def __repr__(self):
         u = self
         return f"<User username={u.username} password={u.password} email={u.email} first_name={u.first_name} last_name={u.last_name}>"
+
+
+class Feedback(db.Model):
+    __tablename__ = "feedbacks"
+
+    # id = db.Column(db.Integer, primary_key=True, auto_)
+
+    title = db.Column(db.String(100), nullable=False)
+
+    content = db.Column(db.Text, nullable=False)
+
+    # username = db.Column()
