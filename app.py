@@ -1,7 +1,7 @@
 from flask import Flask, redirect
 from flask.templating import render_template
 from models import db, connect_db, User, Feedback
-# from forms import
+from forms import AddNewUserForm
 
 app = Flask(__name__)
 
@@ -25,4 +25,6 @@ def redirect_home():
 def get_register_form():
     """Show a form that when submitted will register/create a user. This form should accept a username, password, email, first_name, and last_name."""
 
-    return render_template('register.html')
+    form = AddNewUserForm()
+
+    return render_template('register.html', form=form)
