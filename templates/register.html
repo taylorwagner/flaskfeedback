@@ -3,7 +3,31 @@
 {% block content %}
 <div class="container">
     <h1 class="display-1">Register/Create User Here</h1>
-    
+
+    <div class="container">
+        <form id="new-user-form" method="POST" novalidate=True>
+            {{ form.hidden_tag() }}
+          
+            {% for field in form
+                   if field.widget.input_type != 'hidden' %}
+          
+              <p>
+                {{ field.label(class_="form-label") }}
+                {{ field(class_="form-control") }}
+          
+                {% for error in field.errors %}
+                <small class="form-text text-danger">
+                    {{ error }}
+                </small>
+                {% endfor %}
+              </p>
+          
+            {% endfor %}
+          
+            <button type="submit" class="btn btn-primary mb-3">Create User</button>
+          </form>
+          <a href="/" class="btn btn-success">Cancel</a>
+        </div>
 
 </div>
 
