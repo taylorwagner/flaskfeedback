@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect, flash
 from flask.templating import render_template
 from models import db, connect_db, User, Feedback
 from forms import AddNewUserForm
@@ -28,3 +28,29 @@ def get_register_form():
     form = AddNewUserForm()
 
     return render_template('register.html', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def add_user():
+    """Process the registration form by adding a new user. Then redirect to /secret"""
+
+    form = AddNewUserForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        email = form.email.data
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+
+        new_user = User(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash(f"Thanks for registering, {first_name} {last_name}! The user you created has been registered as: {username}. Make sure you write down your password and keep it in a safe place.")
+        return redirect("/secret")
+
+    else:
+        return render_template(
+            "register.html", form=form)
