@@ -1,6 +1,6 @@
 from flask import Flask, redirect
 from flask.templating import render_template
-from models import db, connect_db, User
+from models import db, connect_db, User, Feedback
 # from forms import
 
 app = Flask(__name__)
