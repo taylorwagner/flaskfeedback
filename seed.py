@@ -13,7 +13,7 @@ u4 = User(username='musicISLIFE', password='LYRICS', email='dodadum@piano.org', 
 db.session.add_all([u1, u2, u3, u4])
 db.session.commit()
 
-f1 = Feedback(title="that's what I'm talking about", content="I just love when hard work pays off! It is so fulfilling and makes me want to work even harder!!", username=3)
+f1 = Feedback(title="that's what I'm talking about", content="I just love when hard work pays off! It is so fulfilling and makes me want to work even harder!!", username="dreamComeTrue67")
 
 db.session.add_all([f1])
 db.session.commit()

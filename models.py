@@ -22,12 +22,14 @@ class User(db.Model):
 
     last_name = db.Column(db.String(30), nullable=False)
 
-    
-    # @property
-    # def full_name(self):
-    #     """Return full name of the user"""
+    feedbacks = db.relationship('Feedback', backref='user', cascade='all, delete-orphan')
 
-    #     return f"{self.first_name} {self.last_name}"
+    
+    @property
+    def full_name(self):
+        """Return full name of the user"""
+
+        return f"{self.first_name} {self.last_name}"
 
     def __repr__(self):
         u = self
@@ -37,10 +39,15 @@ class User(db.Model):
 class Feedback(db.Model):
     __tablename__ = "feedbacks"
 
-    # id = db.Column(db.Integer, primary_key=True, auto_)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     title = db.Column(db.String(100), nullable=False)
 
     content = db.Column(db.Text, nullable=False)
 
-    # username = db.Column()
+    username = db.Column(db.String, db.ForeignKey('users.username'))
+
+    
+    def __repr__(self):
+        f = self
+        return f"<Feedback id={f.id} title={f.title} content={f.content} username={f.username}>"
