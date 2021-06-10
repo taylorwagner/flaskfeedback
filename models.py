@@ -1,7 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
 
 db = SQLAlchemy()
+bcrypt = Bcrypt()
+
 
 def connect_db(app):
     """Connect db to Flask app"""
@@ -24,6 +27,31 @@ class User(db.Model):
 
     feedbacks = db.relationship('Feedback', backref='user', cascade='all, delete-orphan')
 
+
+    # #start_register
+    # @classmethod
+    # def register(cls, username, pwd, email, first, last):
+    #     """Register user with hased pw & return user info"""
+
+    #     hashed = bcrypt.generate_password_hash(pwd)
+    #     hashed_utf8 = hashed.decode("utf8")
+
+    #     return cls(username=username, password=hashed_utf8, email=email, first=first, last=last)
+    # #end_register
+
+    # #start_authenticate
+    # @classmethod
+    # def authenticate(cls, username, pwd, email, first, last):
+    #     """Validate that user exists & pw is correct.
+    #     Return user if valid; else return False"""
+
+    #     u = User.query.filter_by(username=username).first()
+
+    #     if u and bcrypt.check_password_hash(u.password, pwd):
+    #         return u
+    #     else: 
+    #         return False
+    # #end_authenticate
     
     @property
     def full_name(self):
