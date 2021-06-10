@@ -80,3 +80,9 @@ def login_user():
             form.username.errors = ["Bad username/password"]
 
     return render_template('login.html', form=form)
+
+
+@app.route('/secret')
+def secret():
+    """Confirming a user is logged in"""
+    return render_template('index.html')
