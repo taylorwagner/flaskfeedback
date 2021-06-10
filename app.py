@@ -1,7 +1,7 @@
-from flask import Flask, redirect, flash
+from flask import Flask, redirect, flash, session
 from flask.templating import render_template
 from models import db, connect_db, User, Feedback
-from forms import AddNewUserForm
+from forms import AddNewUserForm, LoginUserForm
 
 app = Flask(__name__)
 
@@ -50,9 +50,32 @@ def add_user():
         db.session.add(new_user)
         db.session.commit()
 
+        session["user_id"] = new_user.id
+
         flash(f"Thanks for registering, {first_name} {last_name}! The user you created has been registered as: {username}. Make sure you write down your password and keep it in a safe place.")
         return redirect("/secret")
 
     else:
         return render_template(
             "register.html", form=form)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_user():
+
+    form = LoginUserForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        user = User.authenticate(username, password)
+
+        if user:
+            session["user_id"] = user.id
+            return redirect('/secret')
+
+        else:
+            form.username.errors = ["Bad username/password"]
+
+    return render_template('login.html', form=form)

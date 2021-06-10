@@ -14,3 +14,9 @@ class AddNewUserForm(FlaskForm):
     first_name = StringField("First Name", validators=[InputRequired("Please include your first name for the account"), Length(max=30)])
     last_name = StringField("Last Name", validators=[InputRequired("Please include your last name for the account"), Length(max=30)])
     #need to verify email part of the form -- how to implement the email_validator that is imported on line 7
+
+
+class LoginUserForm(FlaskForm):
+    """Log user into App"""
+    username = StringField("Create a Username", validators=[InputRequired("Must create a username for your account!"), Length(max=20)])
+    password = PasswordField("Create a Password", validators=[InputRequired("Must create a password for your account!")])
