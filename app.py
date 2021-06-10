@@ -62,6 +62,7 @@ def add_user():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_user():
+    """Show and handle form for logging in a user"""
 
     form = LoginUserForm()
 
