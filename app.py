@@ -43,7 +43,9 @@ def add_user():
         first_name = form.first_name.data
         last_name = form.last_name.data
 
-        new_user = User(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+        hash_pw = User.register(username, password)
+
+        new_user = User(username=username, password=hash_pw, email=email, first_name=first_name, last_name=last_name)
 
         db.session.add(new_user)
         db.session.commit()
