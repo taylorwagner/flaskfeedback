@@ -84,5 +84,25 @@ def login_user():
 
 @app.route('/secret')
 def secret():
-    """Confirming a user is logged in"""
-    return render_template('index.html')
+    """Example hidden page for logged-in users only."""
+
+    if "user_id" not in session:
+        flash("You must be logged in to view!")
+        return redirect("/")
+
+        # alternatively, can return HTTP Unauthorized status:
+        #
+        # from werkzeug.exceptions import Unauthorized
+        # raise Unauthorized()
+
+    else:
+        return render_template("index.html")
+
+
+@app.route("/logout")
+def logout():
+    """Logs user out and redirects to homepage."""
+
+    session.pop("user_id")
+
+    return redirect("/")
