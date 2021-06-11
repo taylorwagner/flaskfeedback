@@ -1,5 +1,5 @@
 from app import app
-from models import db, connect_db, User, Feedback
+from models import db, User, Feedback
 
 
 db.drop_all()

@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = "santanarush"
 
 connect_db(app)
-db.create_all()
+# db.create_all()
 
 
 @app.route('/')
@@ -94,7 +94,7 @@ def login_user():
             return redirect('/secret')
 
         else:
-            form.username.errors = ["Bad username/password"]
+            form.username.errors = ["Invalid username or password"]
 
     return render_template('login.html', form=form)
 
@@ -146,7 +146,14 @@ def delete_user(username):
 
 # @app.route('/feedback/<int:feedback_id>/update', methods=['GET', 'POST'])
 # def update_feedback(feedback_id):
+#     if "user_id" not in session:
+#         flash("You must be logged in to view!")
+#         return redirect('/')
+
 
 
 # @app.route('/feedback/<int:feedback_id>/delete', methods=['POST'])
 # def delete_feedback(feedback_id):
+#     if "user_id" not in session:
+#         flash("You must be logged in to view!")
+#         return redirect('/')
