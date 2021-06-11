@@ -108,7 +108,7 @@ def logout():
     return redirect("/")
 
 
-@app.route('/users/<str:username>')
+@app.route('/users/<username>')
 def profile(username):
     """Display a template the shows information about that user (everything except for their password)"""
     if "user_id" not in session:
@@ -121,7 +121,7 @@ def profile(username):
         return render_template('profile.html', user=user)
 
 
-@app.route('/users/<str:username>/delete', methods=['POST'])
+@app.route('/users/<username>/delete', methods=['POST'])
 def delete_user(username):
     if "user_id" not in session:
         flash("You must be logged in to view!")
