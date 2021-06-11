@@ -10,7 +10,7 @@
     <li class="list-group-item">Username: {{ user.username }}</li>
     <li class="list-group-item">Email Address: {{ user.email }}</li>
 </ul>
-<p>Need to delete your account? <button class="btn btn-danger">Delete</button> </p>
+<p>Need to delete your account? <button class="btn btn-danger" formaction="/users/{{ user.username }}/delete" formmethod="POST">Delete</button> </p>
 </div>
 
 <div class="container">

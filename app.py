@@ -119,3 +119,16 @@ def profile(username):
         user = User.query.get_or_404(username)
 
         return render_template('profile.html', user=user)
+
+
+@app.route('/users/<username>/delete', methods=['POST'])
+def delete_user(username):
+    if "user_id" not in session:
+        flash("You must be logged in to view!")
+        return redirect("/")
+
+    else:
+        user = User.query.get_or_404(username)
+        db.session.delete(user)
+        db.session.commit()
+        return redirect('/')
