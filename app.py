@@ -30,6 +30,23 @@ def get_register_form():
     return render_template('register.html', form=form)
 
 
+@app.route('/secret')
+def secret():
+    """Example hidden page for logged-in users only."""
+
+    if "user_id" not in session:
+        flash("You must be logged in to view!")
+        return redirect("/")
+
+        # alternatively, can return HTTP Unauthorized status:
+        #
+        # from werkzeug.exceptions import Unauthorized
+        # raise Unauthorized()
+
+    else:
+        return render_template("index.html")
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     """Process the registration form by adding a new user. Then redirect to /secret"""
@@ -80,23 +97,6 @@ def login_user():
             form.username.errors = ["Bad username/password"]
 
     return render_template('login.html', form=form)
-
-
-@app.route('/secret')
-def secret():
-    """Example hidden page for logged-in users only."""
-
-    if "user_id" not in session:
-        flash("You must be logged in to view!")
-        return redirect("/")
-
-        # alternatively, can return HTTP Unauthorized status:
-        #
-        # from werkzeug.exceptions import Unauthorized
-        # raise Unauthorized()
-
-    else:
-        return render_template("index.html")
 
 
 @app.route("/logout")

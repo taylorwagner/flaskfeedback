@@ -3,4 +3,8 @@
 {% block content %}
 <h1 class="display-1">You made it!</h1>
 
+{% for msg in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">{{ msg }}</div>
+{% endfor %}
+
 {% endblock %}
