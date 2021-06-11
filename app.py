@@ -31,7 +31,7 @@ def get_register_form():
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def add_user():
+def register_user():
     """Process the registration form by adding a new user. Then redirect to /secret"""
 
     form = AddNewUserForm()
