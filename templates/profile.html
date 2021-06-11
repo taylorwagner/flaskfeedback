@@ -10,7 +10,12 @@
     <li class="list-group-item">Username: {{ user.username }}</li>
     <li class="list-group-item">Email Address: {{ user.email }}</li>
 </ul>
+</div>
+
+<div class="container">
+<form action="">
 <p>Need to delete your account? <button class="btn btn-danger" formaction="/users/{{ user.username }}/delete" formmethod="POST">Delete</button> </p>
+</form>
 </div>
 
 <div class="container">
@@ -24,7 +29,12 @@
 {% else %}
 <p>No feedback recorded for {{ user.username }} yet!</p>
 {% endif %}
-<p>{{ user.username}}, have more feedback to give? <button class="btn btn-primary">Add Feedback</button> </p>
+</div>
+
+<div class="container">
+<form action="">
+<p>{{ user.username}}, have more feedback to give? <button class="btn btn-primary" formaction="users/{{ user.username }}/feedback/add">Add Feedback</button></p>
+</form>
 </div>
 
 {% endblock %}
