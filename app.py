@@ -50,7 +50,7 @@ def add_user():
         db.session.add(new_user)
         db.session.commit()
 
-        session["user_id"] = new_user.id
+        session["user_id"] = new_user.username
 
         flash(f"Thanks for registering, {first_name} {last_name}! The user you created has been registered as: {username}. Make sure you write down your password and keep it in a safe place.")
         return redirect("/secret")
@@ -73,7 +73,7 @@ def login_user():
         user = User.authenticate(username, password)
 
         if user:
-            session["user_id"] = user.id
+            session["user_id"] = user.username
             return redirect('/secret')
 
         else:
