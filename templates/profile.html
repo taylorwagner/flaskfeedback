@@ -12,4 +12,17 @@
 </ul>
 </div>
 
+<div class="container">
+<h2 class="display-2">Feedback by: {{ user.username }}</h2>
+{% if user.feedbacks %}
+{% for feedback in user.feedbacks %}
+<ul>
+    <li>{{ feedback.title }} <a href="/feedback/{{ feedback.id }}/update">Show More/Edit</a> <button class="btn btn-danger">Delete</button></li>
+</ul>
+{% endfor %}
+{% else %}
+<p>No feedbacks recorded for {{ user.username }} yet!</p>
+{% endif %}
+</div>
+
 {% endblock %}
