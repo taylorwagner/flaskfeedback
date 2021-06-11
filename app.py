@@ -106,3 +106,16 @@ def logout():
     session.pop("user_id")
 
     return redirect("/")
+
+
+@app.route('/users/<username>')
+def profile(username):
+    """Display a template the shows information about that user (everything except for their password)"""
+    if "user_id" not in session:
+        flash("You must be logged in to view!")
+        return redirect("/")
+
+    else:
+        user = User.query.get_or_404(username)
+
+        return render_template('profile.html', user=user)
