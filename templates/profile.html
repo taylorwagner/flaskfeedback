@@ -16,8 +16,8 @@
 <h2 class="display-2">Feedback by: {{ user.username }}</h2>
 {% if user.feedbacks %}
 {% for feedback in user.feedbacks %}
-<ul>
-    <li>{{ feedback.title }} <a href="/feedback/{{ feedback.id }}/update">Show More/Edit</a> <button class="btn btn-danger">Delete</button></li>
+<ul class="list-group">
+    <li class="list-group-item">{{ feedback.title }} <a href="/feedback/{{ feedback.id }}/update">Show More/Edit</a> <button class="btn btn-danger">Delete</button></li>
 </ul>
 {% endfor %}
 {% else %}
