@@ -132,3 +132,13 @@ def delete_user(username):
         db.session.delete(user)
         db.session.commit()
         return redirect('/')
+
+
+# @app.route('/users/<username>/feedback/add', methods=['GET', 'POST'])
+# def add_feedback(username):
+#     if "user_id" not in session:
+#         flash("You must be logged in to view!")
+#         return redirect('/')
+
+#     else:
+#         user = User.query.get_or_404(username)

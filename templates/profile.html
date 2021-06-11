@@ -22,9 +22,11 @@
 <h2 class="display-2">Feedback by: {{ user.username }}</h2>
 {% if user.feedbacks %}
 {% for feedback in user.feedbacks %}
+<form action="">
 <ul class="list-group">
-    <li class="list-group-item">{{ feedback.title }} <a href="/feedback/{{ feedback.id }}/update">Show More/Edit</a> <button class="btn btn-danger">Delete</button></li>
+    <li class="list-group-item">{{ feedback.title }} <a href="/feedback/{{ feedback.id }}/update">Show More/Edit</a> <button class="btn btn-danger" formaction="/feedback/{{ feedback.id }}/delete" formmethod="POST">Delete</button></li>
 </ul>
+</form>
 {% endfor %}
 {% else %}
 <p>No feedback recorded for {{ user.username }} yet!</p>
@@ -33,7 +35,7 @@
 
 <div class="container">
 <form action="">
-<p>{{ user.username}}, have more feedback to give? <button class="btn btn-primary" formaction="users/{{ user.username }}/feedback/add">Add Feedback</button></p>
+<p>{{ user.username}}, have more feedback to give? <button class="btn btn-primary" formaction="/users/{{ user.username }}/feedback/add">Add Feedback</button></p>
 </form>
 </div>
 
