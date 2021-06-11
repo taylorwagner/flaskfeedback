@@ -10,6 +10,7 @@
     <li class="list-group-item">Username: {{ user.username }}</li>
     <li class="list-group-item">Email Address: {{ user.email }}</li>
 </ul>
+<p>Need to delete your account? <button class="btn btn-danger">Delete</button> </p>
 </div>
 
 <div class="container">
@@ -23,6 +24,7 @@
 {% else %}
 <p>No feedbacks recorded for {{ user.username }} yet!</p>
 {% endif %}
+<p>{{ user.username}}, have more feedback to give? <button class="btn btn-primary">Add Feedback</button> </p>
 </div>
 
 {% endblock %}
