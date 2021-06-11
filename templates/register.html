@@ -4,6 +4,10 @@
 <div class="container">
     <h1 class="display-1">Register/Create User Here</h1>
 
+    {% for msg in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">{{ msg }}</div>
+    {% endfor %}
+
     <div class="container">
         <form id="new-user-form" method="POST" novalidate=True>
             {{ form.hidden_tag() }}
