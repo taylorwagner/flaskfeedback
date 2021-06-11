@@ -1,7 +1,7 @@
 from flask import Flask, redirect, flash, session
 from flask.templating import render_template
 from models import db, connect_db, User, Feedback
-from forms import AddNewUserForm, LoginUserForm
+from forms import AddNewUserForm, LoginUserForm, NewFeedbackForm
 
 app = Flask(__name__)
 
@@ -142,3 +142,11 @@ def delete_user(username):
 
 #     else:
 #         user = User.query.get_or_404(username)
+
+
+# @app.route('/feedback/<int:feedback_id>/update', methods=['GET', 'POST'])
+# def update_feedback(feedback_id):
+
+
+# @app.route('/feedback/<int:feedback_id>/delete', methods=['POST'])
+# def delete_feedback(feedback_id):

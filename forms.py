@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.recaptcha import validators
 from wtforms import StringField
 from wtforms.fields.html5 import EmailField
-from wtforms.fields.simple import PasswordField
+from wtforms.fields.simple import PasswordField, TextField
 from wtforms.validators import InputRequired, Email, Length
 import email_validator
 
@@ -20,3 +20,9 @@ class LoginUserForm(FlaskForm):
     """Log user into App"""
     username = StringField("Create a Username", validators=[InputRequired("Must create a username for your account!"), Length(max=20)])
     password = PasswordField("Create a Password", validators=[InputRequired("Must create a password for your account!")])
+
+
+class NewFeedbackForm(FlaskForm):
+    """Create new feedback"""
+    title = StringField("Title of Feedback", validators=[InputRequired("Must include a title"), Length(max=100)])
+    content = TextField("Content of Feedback", validators=[InputRequired("Must include content")])
