@@ -82,6 +82,9 @@ def register_user():
 def login_user():
     """Show and handle form for logging in a user"""
 
+    if "username" in session:
+        return redirect(f"/users/{session['username']}")
+
     form = LoginUserForm()
 
     if form.validate_on_submit():
@@ -92,10 +95,11 @@ def login_user():
 
         if user:
             session["user_id"] = user.username
-            return redirect('/secret')
+            return redirect(f"/users/{user.username}")
 
         else:
             form.username.errors = ["Invalid username or password"]
+            return render_template("login.html", form=form)
 
     return render_template('login.html', form=form)
 
