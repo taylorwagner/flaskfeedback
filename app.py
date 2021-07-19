@@ -21,13 +21,14 @@ def redirect_home():
     return redirect('/register')
 
 
-@app.route('/register')
-def get_register_form():
-    """Show a form that when submitted will register/create a user. This form should accept a username, password, email, first_name, and last_name."""
+# redundant -- not needed
+# @app.route('/register')
+# def get_register_form():
+#     """Show a form that when submitted will register/create a user. This form should accept a username, password, email, first_name, and last_name."""
 
-    form = AddNewUserForm()
+#     form = AddNewUserForm()
 
-    return render_template('register.html', form=form)
+#     return render_template('register.html', form=form)
 
 
 @app.route('/secret')
@@ -51,6 +52,9 @@ def secret():
 def register_user():
     """Process the registration form by adding a new user. Then redirect to /secret"""
 
+    if "username" in session:
+        return redirect(f"/users/{session['username']}")
+
     form = AddNewUserForm()
 
     if form.validate_on_submit():
@@ -60,17 +64,14 @@ def register_user():
         first_name = form.first_name.data
         last_name = form.last_name.data
 
-        hash_pw = User.register(username, password)
+        new_user = User.register(username, password, first_name, last_name, email)
 
-        new_user = User(username=username, password=hash_pw, email=email, first_name=first_name, last_name=last_name)
-
-        db.session.add(new_user)
         db.session.commit()
 
         session["user_id"] = new_user.username
 
         flash(f"Thanks for registering, {first_name} {last_name}! The user you created has been registered as: {username}. Make sure you write down your password and keep it in a safe place.")
-        return redirect("/secret")
+        return redirect(f"/users/{new_user.username}")
 
     else:
         return render_template(
