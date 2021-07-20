@@ -23,6 +23,7 @@
 {% if user.feedbacks %}
 {% for feedback in user.feedbacks %}
 <form action="">
+{{form.hidden_tag()}}
 <ul class="list-group">
     <li class="list-group-item">{{ feedback.title }} <a href="/feedback/{{ feedback.id }}/update">Show More/Edit</a> <button class="btn btn-danger" formaction="/feedback/{{ feedback.id }}/delete" formmethod="POST">Delete</button></li>
 </ul>
