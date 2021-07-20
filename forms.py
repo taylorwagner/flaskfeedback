@@ -22,3 +22,7 @@ class NewFeedbackForm(FlaskForm):
     """Create new feedback"""
     title = StringField("Title of Feedback", validators=[InputRequired("Must include a title"), Length(max=100)])
     content = TextField("Content of Feedback", validators=[InputRequired("Must include content")])
+
+
+class DeleteForm(FlaskForm):
+    """Delete form -- this form is intentionally blank."""

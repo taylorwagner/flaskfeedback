@@ -1,7 +1,10 @@
 from flask import Flask, redirect, flash, session
 from flask.templating import render_template
+from werkzeug.exceptions import Unauthorized
+
+
 from models import db, connect_db, User, Feedback
-from forms import AddNewUserForm, LoginUserForm, NewFeedbackForm
+from forms import AddNewUserForm, LoginUserForm, NewFeedbackForm, DeleteForm
 
 app = Flask(__name__)
 
@@ -110,20 +113,22 @@ def logout():
 
     session.pop("user_id")
 
-    return redirect("/")
+    return redirect("/login")
 
 
 @app.route('/users/<username>')
 def profile(username):
     """Display a template the shows information about that user (everything except for their password)"""
-    if "user_id" not in session:
-        flash("You must be logged in to view!")
-        return redirect("/")
+    if "user_id" not in session or username != session['username']:
+        raise Unauthorized()
+        # flash("You must be logged in to view!")
+        # return redirect("/")
 
     else:
         user = User.query.get_or_404(username)
+        form = DeleteForm()
 
-        return render_template('profile.html', user=user)
+        return render_template('profile.html', user=user, form=form)
 
 
 @app.route('/users/<username>/delete', methods=['POST'])
