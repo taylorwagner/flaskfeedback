@@ -38,7 +38,7 @@ def redirect_home():
 def secret():
     """Example hidden page for logged-in users only."""
 
-    if "user_id" not in session:
+    if "username" not in session:
         flash("You must be logged in to view!")
         return redirect("/")
 
@@ -71,7 +71,7 @@ def register_user():
 
         db.session.commit()
 
-        session["user_id"] = new_user.username
+        session["username"] = new_user.username
 
         flash(f"Thanks for registering, {first_name} {last_name}! The user you created has been registered as: {username}. Make sure you write down your password and keep it in a safe place.")
         return redirect(f"/users/{new_user.username}")
@@ -97,7 +97,7 @@ def login_user():
         user = User.authenticate(username, password)
 
         if user:
-            session["user_id"] = user.username
+            session["username"] = user.username
             return redirect(f"/users/{user.username}")
 
         else:
@@ -111,7 +111,7 @@ def login_user():
 def logout():
     """Logs user out and redirects to homepage."""
 
-    session.pop("user_id")
+    session.pop("username")
 
     return redirect("/login")
 
@@ -119,7 +119,7 @@ def logout():
 @app.route('/users/<username>')
 def profile(username):
     """Display a template the shows information about that user (everything except for their password)"""
-    if "user_id" not in session or username != session['username']:
+    if "username" not in session or username != session['username']:
         raise Unauthorized()
         # flash("You must be logged in to view!")
         # return redirect("/")
@@ -133,15 +133,18 @@ def profile(username):
 
 @app.route('/users/<username>/delete', methods=['POST'])
 def delete_user(username):
-    if "user_id" not in session:
-        flash("You must be logged in to view!")
-        return redirect("/")
+    if "username" not in session or username != session['username']:
+        raise Unauthorized()
+        # flash("You must be logged in to view!")
+        # return redirect("/")
 
     else:
         user = User.query.get_or_404(username)
         db.session.delete(user)
         db.session.commit()
-        return redirect('/')
+        session.pop("username")
+
+        return redirect('/login')
 
 
 # @app.route('/users/<str:username>/feedback/add', methods=['GET', 'POST'])
