@@ -133,6 +133,7 @@ def profile(username):
 
 @app.route('/users/<username>/delete', methods=['POST'])
 def delete_user(username):
+    """Remove user nad redirect to login."""
     if "username" not in session or username != session['username']:
         raise Unauthorized()
         # flash("You must be logged in to view!")
@@ -149,6 +150,7 @@ def delete_user(username):
 
 @app.route('/users/<username>/feedback/add', methods=['GET', 'POST'])
 def add_feedback(username):
+    """Show add-feedback form and process it."""
     if "username" not in session or username != session['username']:
         raise Unauthorized()
 
@@ -169,12 +171,26 @@ def add_feedback(username):
         return render_template("newfeedback.html", form=form)
 
 
-# @app.route('/feedback/<int:feedback_id>/update', methods=['GET', 'POST'])
-# def update_feedback(feedback_id):
-#     if "user_id" not in session:
-#         flash("You must be logged in to view!")
-#         return redirect('/')
+@app.route('/feedback/<int:feedback_id>/update', methods=['GET', 'POST'])
+def update_feedback(feedback_id):
+    """Show update-feedback form and process it."""
 
+    feedback = Feedback.query.get(feedback_id)
+
+    if "username" not in session or feedback.username != session['username']:
+        raise Unauthorized()
+
+    form = NewFeedbackForm(obj=feedback)
+
+    if form.validate_on_submit():
+        feedback.title = form.title.data
+        feedback.content = form.content.data
+
+        db.session.commit()
+        
+        return redirect(f"/users/{feedback.username}")
+
+    return render_template("editfeedback.html", feedback=feedback, form=form)
 
 
 # @app.route('/feedback/<int:feedback_id>/delete', methods=['POST'])
